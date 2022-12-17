@@ -189,6 +189,11 @@ holding export options."
        (and (stringp template)
             (format-spec template spec)))
 
+     ;; quote
+     (let ((quote (plist-get info :quote)))
+       (when quote
+         (format "\\quote{%s}\n" quote)))
+
      ;; Document start.
      "\\begin{document}\n\n"
 
