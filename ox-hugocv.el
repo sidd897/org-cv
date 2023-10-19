@@ -52,8 +52,7 @@
     (:linkedin "LINKEDIN" nil nil parse)
     (:with-email nil "email" t t)
     )
-  :translate-alist '((headline . org-hugocv-headline)
-                     (inner-template . org-hugocv-inner-template)))
+  :translate-alist '((headline . org-hugocv-headline)))
 
 
 (defun org-hugocv--format-cventry (headline contents info)
@@ -64,19 +63,20 @@ as a communication channel."
          (loffset (string-to-number (plist-get info :hugo-level-offset))) ;"" -> 0, "0" -> 0, "1" -> 1, ..
          (level (org-export-get-relative-level headline info))
          (title (concat (make-string (+ loffset level) ?#) " " (alist-get 'title entry))))
-    (format "\n%s
+    (format "<div class=\"cv-entry\">
+\n%s
 
-<ul class=\"cventry\">
-    <li class=\"fa fa-building\"> %s</li>
-    <li class=\"fa fa-map-marker\"> %s</li>
-    <li class=\"fa fa-calendar\"> %s</li>
-</ul>
+<i class=\"fa fa-building\"></i>%s<br/>
+<i class=\"fa fa-calendar\"></i>%s
+<i class=\"fa fa-map-marker\"></i>%s
 
 %s
+
+</div>
 " title
 (alist-get 'employer entry)
-(alist-get 'location entry)
 (org-cv-utils--format-time-window (alist-get 'from-date entry) (alist-get 'to-date entry))
+(alist-get 'location entry)
 contents)))
 
 
@@ -94,42 +94,6 @@ as a communication channel."
        ((equal environment "cventry")
         (org-hugocv--format-cventry headline contents info))
        ((org-export-with-backend 'hugo headline contents info))))))
-
-(defun org-hugocv-inner-template (contents info)
-  "Return body of document after converting it to Hugo-compatible Markdown.
-CONTENTS is the transcoded contents string.  INFO is a plist
-holding export options."
-    (concat "<ul id=\"cvcontacts\">\n"
-            ;; email
-            (let ((email (and (plist-get info :with-email)
-                              (org-export-data (plist-get info :email) info))))
-              (when (org-string-nw-p email)
-                (format "<li class=\"fa fa-envelope\"><a href=\"mailto:%s\"> %s</a></li>\n" email email)))
-            ;; homepage
-            (let ((homepage (org-export-data (plist-get info :homepage) info)))
-              (when (org-string-nw-p homepage) (format "<li class=\"fa fa-globe\"><a href=\"https://%s\"> %s</a></li>\n" homepage homepage)))
-            ;; social media
-            (mapconcat (lambda (social-network)
-
-                         (let ((network (org-export-data
-                                         (plist-get info (car social-network))
-
-                                                         info)))
-
-                           (when (org-string-nw-p network)
-                             (format "<li class=\"fa fa-%s\"><a href=\"https://%s/%s\"> %s</a></li>\n"
-                                                (nth 1 social-network)
-                                                (nth 2 social-network)
-                                                network
-                                                network))))
-
-                        '((:github "github" "www.github.com")
-                        (:gitlab "gitlab" "www.gitlab.com")
-                        (:linkedin "linkedin" "www.linkedin.com/in"))
-                        "")
-            "</ul>\n\n"
-            (org-hugo-inner-template contents info)))
-
 
 (provide 'ox-hugocv)
 ;;; ox-hugocv ends here
