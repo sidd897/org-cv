@@ -29,6 +29,7 @@
 
 ;;; Code:
 (require 'ox-hugo)
+(require 'dash)
 (require 'org-cv-utils)
 
 ;;; User-Configurable Variables
@@ -54,6 +55,20 @@
     )
   :translate-alist '((headline . org-hugocv-headline)))
 
+(defun org-hugocv--entry-with-icon (field entry)
+  "HTML entry for given FIELD when it is specified in ENTRY."
+  (cl-ecase field
+    (employer
+     (-some->> (alist-get 'employer entry)
+       (format "<i class=\"fa fa-building\"></i>%s<br/>")))
+    (date
+     (-some->>
+         (org-cv-utils--format-time-window (alist-get 'from-date entry) (alist-get 'to-date entry))
+       (format "<i class=\"fa fa-calendar\"></i>%s")))
+    (location
+     (-some->> (alist-get 'location entry)
+       (org-string-nw-p)
+       (format "<i class=\"fa fa-map-marker\"></i>%s")))))
 
 (defun org-hugocv--format-cventry (headline contents info)
   "Format HEADLINE as as cventry.
@@ -66,17 +81,14 @@ as a communication channel."
     (format "<div class=\"cv-entry\">
 \n%s
 
-<i class=\"fa fa-building\"></i>%s<br/>
-<i class=\"fa fa-calendar\"></i>%s
-<i class=\"fa fa-map-marker\"></i>%s
+%s
 
 %s
 
-</div>
-" title
-(alist-get 'employer entry)
-(org-cv-utils--format-time-window (alist-get 'from-date entry) (alist-get 'to-date entry))
-(alist-get 'location entry)
+</div>" title
+(mapconcat (lambda (field) (org-hugocv--entry-with-icon field entry))
+           '(employer date location)
+           "\n")
 contents)))
 
 

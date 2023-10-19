@@ -31,7 +31,7 @@
 (require 'org-element)
 
 (defun org-cv-utils-org-timestamp-to-shortdate (date_str)
-"Format orgmode timestamp DATE_STR  into a short form date.
+  "Format orgmode timestamp DATE_STR  into a short form date.
 Other strings are just returned unmodified
 
 e.g. <2012-08-12 Mon> => Aug 2012
@@ -54,7 +54,7 @@ If both dates are the same, return just FROM-DATE"
               (org-cv-utils-org-timestamp-to-shortdate to-date))))
 
     (if from
-        (if (string= from to)
+        (if (or (string= from to) (string-equal-ignore-case to "skip"))
             from
           (concat from " -- " to))
       "")))
@@ -65,7 +65,7 @@ INFO is a plist used as a communication channel."
   (let ((title (org-export-data (org-element-property :title headline) info)))
     `((title . ,title)
       (from-date . ,(or (org-element-property :FROM headline)
-                      (error "No FROM property provided for cventry %s" title)))
+                        (error "No FROM property provided for cventry %s" title)))
       (to-date . ,(org-element-property :TO headline))
       (employer . ,(org-element-property :EMPLOYER headline))
       (location . ,(or (org-element-property :LOCATION headline) "")))))
