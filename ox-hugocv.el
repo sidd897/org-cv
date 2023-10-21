@@ -35,7 +35,7 @@
 ;;; User-Configurable Variables
 
 (defgroup org-export-hugocv nil
-  "Options for exporting Org mode files to Hugo-compatible Markdown"
+  "Options for exporting Org mode files to Hugo-compatible Markdown."
   :tag "Org Export Hugo CV"
   :group 'org-export
   :version "25.3")
@@ -43,8 +43,7 @@
 ;;; Define Back-End
 (org-export-define-derived-backend 'hugocv 'hugo
   :options-alist
-  '(
-    (:mobile "MOBILE" nil nil parse)
+  '((:mobile "MOBILE" nil nil parse)
     (:homepage "HOMEPAGE" nil nil parse)
     (:address "ADDRESS" nil nil newline)
     (:photo "PHOTO" nil nil parse)
@@ -60,15 +59,15 @@
   (cl-ecase field
     (employer
      (-some->> (alist-get 'employer entry)
-       (format "<i class=\"fa fa-building\"></i>%s<br/>")))
+       (format "%s\n{.cv-host}")))
     (date
      (-some->>
          (org-cv-utils--format-time-window (alist-get 'from-date entry) (alist-get 'to-date entry))
-       (format "<i class=\"fa fa-calendar\"></i>%s")))
+       (format "%s\n{.cv-date}")))
     (location
      (-some->> (alist-get 'location entry)
        (org-string-nw-p)
-       (format "<i class=\"fa fa-map-marker\"></i>%s")))))
+       (format "%s\n{.cv-location}")))))
 
 (defun org-hugocv--format-cventry (headline contents info)
   "Format HEADLINE as as cventry.
@@ -78,20 +77,12 @@ as a communication channel."
          (loffset (string-to-number (plist-get info :hugo-level-offset))) ;"" -> 0, "0" -> 0, "1" -> 1, ..
          (level (org-export-get-relative-level headline info))
          (title (concat (make-string (+ loffset level) ?#) " " (alist-get 'title entry))))
-    (format "<div class=\"cv-entry\">
-\n%s
-
-%s
-
-%s
-
-</div>" title
-(mapconcat (lambda (field) (org-hugocv--entry-with-icon field entry))
-           '(employer date location)
-           "\n")
-contents)))
-
-
+    (format "<div class=\"cv-entry\">\n\n%s\n\n%s\n\n%s\n</div>"
+            (concat title "  {.cv-role}")
+            (mapconcat (lambda (field) (org-hugocv--entry-with-icon field entry))
+                       '(employer date location)
+                       "\n")
+            contents)))
 
 ;;;; Headline
 (defun org-hugocv-headline (headline contents info)
@@ -99,13 +90,11 @@ contents)))
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
   (unless (org-element-property :footnote-section-p headline)
-    (let ((environment (let ((env (org-element-property :CV_ENV headline)))
-                         (or (org-string-nw-p env) "block"))))
+    (let ((environment (org-export-get-tags headline info)))
       (cond
-       ;; is a cv entry
-       ((equal environment "cventry")
+       ((seq-intersection environment '("cventry"))
         (org-hugocv--format-cventry headline contents info))
        ((org-export-with-backend 'hugo headline contents info))))))
 
 (provide 'ox-hugocv)
-;;; ox-hugocv ends here
+;;; ox-hugocv.el ends here

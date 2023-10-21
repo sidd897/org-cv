@@ -28,6 +28,7 @@
 
 ;;; Code:
 (require 'org)
+(require 'ox)
 (require 'org-element)
 
 (defun org-cv-utils-org-timestamp-to-shortdate (date_str)
