@@ -37,7 +37,7 @@
   (add-to-list 'org-latex-classes
                '("altacv"
                  "\\documentclass{altacv}"
-                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\n\\section{%s}" . "\n\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
@@ -83,8 +83,7 @@
  colorlinks=true,
  urlcolor=olive!50!black!30!green,
  }
-"
-)
+")
 ;;;; Template
 ;;
 ;; Template used is similar to the one used in `latex' back-end,
@@ -195,11 +194,10 @@ CONTENTS holds the contents of the headline.  INFO is a plist used
 as a communication channel."
   (let* ((entry (org-cv-utils--parse-cventry headline info))
          (divider (if (org-export-last-sibling-p headline info) "\n" "\\divider")))
-    (format "\n\\cvevent{%s}{%s}{%s}{%s}%s\n%s"
+    (format "\n\\cvevent{%s}{%s}{%s}{%s}%s\n%s\n\n"
             (alist-get 'title entry)
-            (alist-get 'employer entry)
-            (org-cv-utils--format-time-window (alist-get 'from-date entry)
-                                              (alist-get 'to-date entry))
+            (alist-get 'host entry)
+            (alist-get 'date entry)
             (alist-get 'location entry) contents divider)))
 
 ;;;; Headline

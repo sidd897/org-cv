@@ -185,12 +185,10 @@ CONTENTS holds the contents of the headline.  INFO is a plist used
 as a communication channel."
   (let* ((entry (org-cv-utils--parse-cventry headline info))
          (note (or (org-element-property :NOTE headline) "")))
-
-    (format "\\cventry{\\textbf{%s}}{%s}{%s}{%s}{%s}{%s}\n"
-            (org-cv-utils--format-time-window (alist-get 'from-date entry)
-                                              (alist-get 'to-date entry))
+    (format "\\cventry{%s}{%s}{%s}{%s}{%s}{%s}\n"
+            (alist-get 'date entry)
             (alist-get 'title entry)
-            (alist-get 'employer entry)
+            (alist-get 'host entry)
             (alist-get 'location entry)
             note contents)))
 
