@@ -15,6 +15,7 @@
   :init
   (require 'ox-moderncv)
   (require 'ox-altacv)
+  (require 'ox-hugocv)
   (require 'ox-awesomecv))
 
 (defun export-latex (backend file)
@@ -31,13 +32,13 @@
 
 (let ((readme (concat cv-cwd "readme.org")))
   (make-directory cv-workdir t)
-  (cd cv-workdir)
   (with-current-buffer
       (find-file-noselect readme)
+    (cd cv-workdir)
     (org-babel-tangle)))
 
 (copy-file (concat cv-cwd "doc/smile.png") cv-workdir t)
-(make-directory (concat cwd "/doc/static/") t)
+(make-directory (concat cv-cwd "/doc/static/") t)
 (export-latex 'altacv "altacv.org")
 (export-latex 'moderncv "moderncv.org")
 (export-latex 'awesomecv "awesomecv.org")
