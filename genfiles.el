@@ -3,7 +3,7 @@
 (defvar cv-workdir "/tmp/org-cv-exports/")
 
 (with-current-buffer (find-file-noselect "/tmp/install-org.el")
-  (emacs-lisp-byte-compile-and-load))
+  (eval-buffer))
 
 (use-package ox-hugo
   :ensure t
