@@ -50,22 +50,21 @@ today => today"
 FROM-DATE -- TO-DATE
 in case TO-DATE is nil return Present.
 If both dates are the same, return just FROM-DATE"
-  (let ((from (when from-date (org-cv-utils-org-timestamp-to-shortdate from-date)))
+  (let ((from (org-cv-utils-org-timestamp-to-shortdate from-date))
         (to (if (not to-date) "Present"
               (org-cv-utils-org-timestamp-to-shortdate to-date))))
-
-    (if from
-        (if (or (string= from to))
-            from
-          (concat from " -- " to))
-      "")))
+    (if (or (string= from to))
+        from
+      (concat from " -- " to))))
 
 (defun org-cv-utils--parse-cventry (headline info)
   "Return alist describing the entry in HEADLINE.
 INFO is a plist used as a communication channel."
   (let* ((title (org-export-data (org-element-property :title headline) info))
          (date (org-element-property :DATE headline))
-         (from-date (or (org-element-property :FROM headline) date))
+         (from-date (or (org-element-property :FROM headline)
+                        date
+                        (user-error "No FROM property provided for cventry %s" title)))
          (to-date (or (org-element-property :TO headline) date))
          (host (or (org-element-property :HOST headline)
                    (org-element-property :ORGANIZATION headline)
@@ -74,9 +73,7 @@ INFO is a plist used as a communication channel."
                    (org-element-property :EMPLOYER headline)
                    (org-element-property :EVENT headline) "")))
     `((title . ,title)
-      (from-date . ,(or from-date
-                        (error "No FROM property provided for cventry %s" title)))
-      (to-date . ,to-date)
+      (date . , (org-cv-utils--format-time-window from-date to-date))
       (host . ,host)
       (location . ,(or (org-element-property :LOCATION headline) ""))
       (image . ,(org-element-property :IMAGE headline)))))

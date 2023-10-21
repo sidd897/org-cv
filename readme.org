@@ -81,10 +81,19 @@ put your foreseen job.
 #+END_SRC
 
 You can use org-modes hierarchical structure to describe your CV. To make a
-specific subtree an item describing an experience point (Job you have,
-degree you pursued, etc.) you use the org properties drawer and with the
-=:CV_ENV: cventry= property. You should also include the =FROM= and =TO=
-properties defining the span of the event, as =LOCATION= and =EMPLOYER=.
+specific subtree an item describing an experience point (Job you have, degree
+you pursued, etc.) you use the org properties drawer and with the =:CV_ENV:
+cventry= property. You should also include the =FROM= and =TO= properties
+defining the span of the entry, as well as =LOCATION= and =EMPLOYER=.
+
+Because work isn't everything we do, it is more meaningful to label differently
+the host of those other events like studies, events, certifications, etc.  Thus
+=HOST=, =ORGANIZATION=, =INSTITUTION=, =SCHOOL=, =EMPLOYER= or =EVENT=  are all
+equivalent and the first match in that order has precedence.
+
+=DATE= is a shortcut for =FROM= and =TO= when you have a single date in mind
+instead of a range. Both =FROM= and =TO= override =DATE=.
+
 #+BEGIN_SRC org :tangle workcontent.org
 ,* Employement
 ,** One job
@@ -124,7 +133,7 @@ latex distributions. I maintain a fork of it, to work with my use case at
 https://github.com/Titan-C/moderncv.git Feel free to use any or even your
 personal fork for your desired use case.
 
-To configure the export for moderncv you need the addition options in your
+To configure the export for moderncv you need the additional options in your
 org file.
 #+BEGIN_SRC org :tangle moderncv.org
 # CV theme - options include: 'casual' (default), 'classic', 'oldstyle' and 'banking'
@@ -253,9 +262,9 @@ Note that AwesomeCV uses the =fontspec= package, so you need to set =org-latex-c
 | PHOTOSTYLE      | Style of photo to use. Comma-separated values can include   |
 |                 | circle/rectangle,edge/noedge,left/right.                    |
 | CVCOLOR         | Color of highlights.                                        |
-| STACKOVERFLOW   | Stack overflow info, must be specified as "=ID username="     |
+| STACKOVERFLOW   | Stack overflow info, must be specified as "=ID username="   |
 | FONTDIR         | Directory where the fonts can be found, defaults            |
-|                 | to =fonts/= (as in the standard AwesomeCV)                    |
+|                 | to =fonts/= (as in the standard AwesomeCV)                  |
 | CVHIGHLIGHTS    | Whether to colorize highlights. Defaults to true            |
 | QUOTE           | Optional quote to include at the top of the CV              |
 | FIRSTNAME       | First name to be shown in the CV. By default the first      |
@@ -275,22 +284,22 @@ including =cvemployer=, =cvskills=, =cvhonors= and =cvschool= (see full list bel
 Some of these support additional property fields:
 
 #+attr_html: :class table table-striped
-| Field     | Description                                                      |
-|-----------+------------------------------------------------------------------|
-| FROM      | Start date of the entry                                          |
-| TO        | End date of the entry                                            |
+| Field     | Description                                                          |
+|-----------+----------------------------------------------------------------------|
+| FROM      | Start date of the entry                                              |
+| TO        | End date of the entry                                                |
 | DATE      | Shortcut to specify both =FROM= and =TO= as the same date.           |
-|           | Both =FROM= and =TO= override =DATE=.                                  |
-| EMPLOYER  | Employer or organization, can also be specified                  |
-|           | as =ORGANIZATION=, =SCHOOL=, =EVENT= or =POSITION= (different            |
-|           | names make more sense depending on the type of environment)      |
-| LABEL     | In =cvsubentry= environments, adds the given text to the left      |
-|           | of the date range, can be used to add additional information     |
-|           | to the entry.                                                    |
-| RIGHT_IMG | path to an image to include floating to the right of a =cventry=,  |
+|           | Both =FROM= and =TO= override =DATE=.                                |
+| EMPLOYER  | Employer or organization, can also be specified                      |
+|           | as =ORGANIZATION=, =SCHOOL=, =EVENT= or =POSITION= (different        |
+|           | names make more sense depending on the type of environment)          |
+| LABEL     | In =cvsubentry= environments, adds the given text to the left        |
+|           | of the date range, can be used to add additional information         |
+|           | to the entry.                                                        |
+| RIGHT_IMG | path to an image to include floating to the right of a =cventry=,    |
 |           | a =cvsubentry= or =cvschool= entry. Meant to be used to show a logo. |
-| PAGEBREAK | Causes a LaTeX =\clearpage= statement to be inserted in the        |
-|           | exported output before the heading.                              |
+| PAGEBREAK | Causes a LaTeX =\clearpage= statement to be inserted in the          |
+|           | exported output before the heading.                                  |
 
 All the supported values of =CV_ENV= for CVs are described below.
 

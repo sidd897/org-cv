@@ -14,7 +14,6 @@ The basic structure of an org file containing your CV is shown next.
 put your foreseen job.
 
 <div class="ox-hugo-table table table-striped">
-<div></div>
 
 | Field    | Description                                        |
 |----------|----------------------------------------------------|
@@ -47,10 +46,18 @@ put your foreseen job.
 ```
 
 You can use org-modes hierarchical structure to describe your CV. To make a
-specific subtree an item describing an experience point (Job you have,
-degree you pursued, etc.) you use the org properties drawer and with the
-`:CV_ENV: cventry` property. You should also include the `FROM` and `TO`
-properties defining the span of the event, as `LOCATION` and `EMPLOYER`.
+specific subtree an item describing an experience point (Job you have, degree
+you pursued, etc.) you use the org properties drawer and with the `:CV_ENV:
+cventry` property. You should also include the `FROM` and `TO` properties
+defining the span of the entry, as well as `LOCATION` and `EMPLOYER`.
+
+Because work isn't everything we do, it is more meaningful to label differently
+the host of those other events like studies, events, certifications, etc.  Thus
+`HOST`, `ORGANIZATION`, `INSTITUTION`, `SCHOOL`, `EMPLOYER` or `EVENT`  are all
+equivalent and the first match in that order has precedence.
+
+`DATE` is a shortcut for `FROM` and `TO` when you have a single date in mind
+instead of a range. Both `FROM` and `TO` override `DATE`.
 
 ```org
 * Employement

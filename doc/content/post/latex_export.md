@@ -12,7 +12,7 @@ latex distributions. I maintain a fork of it, to work with my use case at
 <https://github.com/Titan-C/moderncv.git> Feel free to use any or even your
 personal fork for your desired use case.
 
-To configure the export for moderncv you need the addition options in your
+To configure the export for moderncv you need the additional options in your
 org file.
 
 ```org
@@ -120,27 +120,26 @@ Note that AwesomeCV uses the `fontspec` package, so you need to set `org-latex-c
 In addition to the regular document attributes, the following are supported:
 
 <div class="ox-hugo-table table table-striped">
-<div></div>
 
-| Field            | Description                                                 |
-|------------------|-------------------------------------------------------------|
-| PHOTOSTYLE       | Style of photo to use. Comma-separated values can include   |
-|                  | circle/rectangle,edge/noedge,left/right.                    |
-| CVCOLOR          | Color of highlights.                                        |
-| STACKOVERFLOW    | Stack overflow info, must be specified as "`ID username`"   |
-| FONTDIR          | Directory where the fonts can be found, defaults            |
-|                  | to `fonts/` (as in the standard AwesomeCV)                  |
-| CVHIGHLIGHTS     | Whether to colorize highlights. Defaults to true            |
-| QUOTE            | Optional quote to include at the top of the CV              |
-| FIRSTNAME        | First name to be shown in the CV. By default the first      |
-|                  | space-separated part of AUTHOR is used.                     |
-| LASTNAME         | Last name to be shown in the CV.  By default the second     |
-|                  | space-separated part of AUTHOR is used.                     |
-| CVFOOTER\_LEFT   | Text to include in the left footer. None by default         |
-| CVFOOTER\_MIDDLE | Text to include in the middle footer. None by default.      |
-| CVFOOTER\_RIGHT  | Text to include in the right footer. None by default.       |
-| LATEX\_TITLE     | Text to use as the title section. \makecvheader by default. |
-|                  | (Can specify \makecvheader[R] to justify to the right)      |
+| Field           | Description                                                 |
+|-----------------|-------------------------------------------------------------|
+| PHOTOSTYLE      | Style of photo to use. Comma-separated values can include   |
+|                 | circle/rectangle,edge/noedge,left/right.                    |
+| CVCOLOR         | Color of highlights.                                        |
+| STACKOVERFLOW   | Stack overflow info, must be specified as "`ID username`"   |
+| FONTDIR         | Directory where the fonts can be found, defaults            |
+|                 | to `fonts/` (as in the standard AwesomeCV)                  |
+| CVHIGHLIGHTS    | Whether to colorize highlights. Defaults to true            |
+| QUOTE           | Optional quote to include at the top of the CV              |
+| FIRSTNAME       | First name to be shown in the CV. By default the first      |
+|                 | space-separated part of AUTHOR is used.                     |
+| LASTNAME        | Last name to be shown in the CV.  By default the second     |
+|                 | space-separated part of AUTHOR is used.                     |
+| CVFOOTER_LEFT   | Text to include in the left footer. None by default         |
+| CVFOOTER_MIDDLE | Text to include in the middle footer. None by default.      |
+| CVFOOTER_RIGHT  | Text to include in the right footer. None by default.       |
+| LATEX_TITLE     | Text to use as the title section. \makecvheader by default. |
+|                 | (Can specify \makecvheader[R] to justify to the right)      |
 
 </div>
 
@@ -152,24 +151,23 @@ including `cvemployer`, `cvskills`, `cvhonors` and `cvschool` (see full list bel
 Some of these support additional property fields:
 
 <div class="ox-hugo-table table table-striped">
-<div></div>
 
-| Field      | Description                                                          |
-|------------|----------------------------------------------------------------------|
-| FROM       | Start date of the entry                                              |
-| TO         | End date of the entry                                                |
-| DATE       | Shortcut to specify both `FROM` and `TO` as the same date.           |
-|            | Both `FROM` and `TO` override `DATE`.                                |
-| EMPLOYER   | Employer or organization, can also be specified                      |
-|            | as `ORGANIZATION`, `SCHOOL`, `EVENT` or `POSITION` (different        |
-|            | names make more sense depending on the type of environment)          |
-| LABEL      | In `cvsubentry` environments, adds the given text to the left        |
-|            | of the date range, can be used to add additional information         |
-|            | to the entry.                                                        |
-| RIGHT\_IMG | path to an image to include floating to the right of a `cventry`,    |
-|            | a `cvsubentry` or `cvschool` entry. Meant to be used to show a logo. |
-| PAGEBREAK  | Causes a LaTeX `\clearpage` statement to be inserted in the          |
-|            | exported output before the heading.                                  |
+| Field     | Description                                                          |
+|-----------|----------------------------------------------------------------------|
+| FROM      | Start date of the entry                                              |
+| TO        | End date of the entry                                                |
+| DATE      | Shortcut to specify both `FROM` and `TO` as the same date.           |
+|           | Both `FROM` and `TO` override `DATE`.                                |
+| EMPLOYER  | Employer or organization, can also be specified                      |
+|           | as `ORGANIZATION`, `SCHOOL`, `EVENT` or `POSITION` (different        |
+|           | names make more sense depending on the type of environment)          |
+| LABEL     | In `cvsubentry` environments, adds the given text to the left        |
+|           | of the date range, can be used to add additional information         |
+|           | to the entry.                                                        |
+| RIGHT_IMG | path to an image to include floating to the right of a `cventry`,    |
+|           | a `cvsubentry` or `cvschool` entry. Meant to be used to show a logo. |
+| PAGEBREAK | Causes a LaTeX `\clearpage` statement to be inserted in the          |
+|           | exported output before the heading.                                  |
 
 </div>
 
@@ -262,19 +260,18 @@ They will *not* be exported.
 ```
 
 <div class="ox-hugo-table table table-striped">
-<div></div>
 
-| Field            | Description                                                                      |
-|------------------|----------------------------------------------------------------------------------|
-| RECIPIENT        | Addressee E.g. Company Recruitment Team                                          |
-| EMPLOYER         | Company name                                                                     |
-| LOCATION         | Company address                                                                  |
-| LETTER\_OPENING  | Letter opening, E.g. Dear Ms./Mr./Dr. LastName                                   |
-| LETTER\_CLOSING  | Letter closing, E.g. Yours Sincerely,                                            |
-| DATE             | The date used for the letter, uses \\\today as default if unspecified            |
-| DATEFORMAT       | Specify an alternative date format for the letter header                         |
-|                  | E.g. %e %M %Y might provide 19 March 2021                                        |
-| LETTER\_ATTACHED | Attachments to the letter, will be listed at the bottom. E.g. "Curriculum Vitae" |
+| Field           | Description                                                                      |
+|-----------------|----------------------------------------------------------------------------------|
+| RECIPIENT       | Addressee E.g. Company Recruitment Team                                          |
+| EMPLOYER        | Company name                                                                     |
+| LOCATION        | Company address                                                                  |
+| LETTER_OPENING  | Letter opening, E.g. Dear Ms./Mr./Dr. LastName                                   |
+| LETTER_CLOSING  | Letter closing, E.g. Yours Sincerely,                                            |
+| DATE            | The date used for the letter, uses \\\today as default if unspecified            |
+| DATEFORMAT      | Specify an alternative date format for the letter header                         |
+|                 | E.g. %e %M %Y might provide 19 March 2021                                        |
+| LETTER_ATTACHED | Attachments to the letter, will be listed at the bottom. E.g. "Curriculum Vitae" |
 
 </div>
 
