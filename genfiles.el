@@ -5,11 +5,29 @@
 (with-current-buffer (find-file-noselect "/tmp/install-org.el")
   (emacs-lisp-byte-compile-and-load))
 
-(add-to-list 'load-path cv-cwd)
+(use-package ox-hugo
+  :ensure t
+  :pin melpa
+  :after ox)
 
-(require 'ox-moderncv)
-(require 'ox-altacv)
-(require 'ox-awesomecv)
+(use-package ox-moderncv
+  :load-path cv-cwd
+  :init
+  (require 'ox-moderncv)
+  (require 'ox-altacv)
+  (require 'ox-awesomecv))
+
+(defun export-latex (backend file)
+  (let ((workfile (concat cv-workdir file))
+        (outfile (concat cv-workdir file ".tex"))
+        (pdffile (concat cv-workdir file ".pdf")))
+    (message (format "%s exists: %s" workfile (file-exists-p workfile)))
+    (with-current-buffer
+        (find-file-noselect workfile)
+      (org-mode)
+      (org-export-to-file backend outfile)
+      (shell-command (format "lualatex %s" outfile) "*Messages*" "*Messages*")
+      (copy-file pdffile (concat cv-cwd "/doc/static/" (concat file ".pdf")) t))))
 
 (let ((readme (concat cv-cwd "readme.org")))
   (make-directory cv-workdir t)
@@ -19,17 +37,6 @@
     (org-babel-tangle)))
 
 (copy-file (concat cv-cwd "doc/smile.png") cv-workdir t)
-
-(defun export-latex (backend file)
-  (let ((workfile (concat cv-workdir file))
-        (outfile (concat cv-workdir file ".tex")))
-    (message (format "%s exists: %s" workfile (file-exists-p workfile)))
-    (find-file workfile)
-    (org-mode)
-    (org-export-to-file backend outfile)
-    (shell-command (format "lualatex %s" outfile) "*Messages*" "*Messages*")
-    (copy-file (concat file ".pdf") (concat cv-cwd "/doc/static/" (concat file ".pdf")) t)))
-
 (make-directory (concat cwd "/doc/static/") t)
 (export-latex 'altacv "altacv.org")
 (export-latex 'moderncv "moderncv.org")
