@@ -34,6 +34,7 @@ put your foreseen job.
 #+TITLE: My dream job
 #+AUTHOR: John Doe
 #+email: john@doe.lost
+#+options: tags:nil
 
 #+ADDRESS: My Awesome crib
 #+ADDRESS: Fantastic city -- Planet Earth
@@ -60,8 +61,8 @@ equivalent and the first match in that order has precedence.
 instead of a range. Both `FROM` and `TO` override `DATE`.
 
 ```org
-* Employement
-** One job
+* Employement  :cventries:
+** One job  :cventry:
 :PROPERTIES:
 :CV_ENV: cventry
 :FROM:     <2014-09-01>
@@ -71,7 +72,7 @@ instead of a range. Both `FROM` and `TO` override `DATE`.
 :END:
 
 I write about awesome stuff I do.
-** Other job
+** Other job  :cventry:
 :PROPERTIES:
 :CV_ENV: cventry
 :FROM:     <2013-09-01>

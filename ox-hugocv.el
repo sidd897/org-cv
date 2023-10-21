@@ -1,6 +1,6 @@
 ;;; ox-hugocv.el --- LaTeX hugocv Back-End for Org Export Engine -*- lexical-binding: t; -*-
 
-;; Package-Requires: ((dash "2.19.1"))
+;; Package-Requires: ((emacs "28.1") (dash "2.19.1"))
 ;; Copyright (C) 2018 Free Software Foundation, Inc.
 
 ;; Author: Oscar Najera <hi AT oscarnajera.com DOT com>
@@ -51,8 +51,7 @@
     (:gitlab "GITLAB" nil nil parse)
     (:github "GITHUB" nil nil parse)
     (:linkedin "LINKEDIN" nil nil parse)
-    (:with-email nil "email" t t)
-    )
+    (:with-email nil "email" t t))
   :translate-alist '((headline . org-hugocv-headline)))
 
 (defun org-hugocv--entry-with-icon (field entry)

@@ -16,7 +16,8 @@
   :init
   (require 'ox-altacv)
   (require 'ox-hugocv)
-  (require 'ox-awesomecv))
+  (require 'ox-awesomecv)
+  (require 'ox-awesomecv2))
 
 (defun export-latex (backend file)
   (let ((workfile (concat cv-workdir file))
@@ -45,5 +46,5 @@
 (message "alta %s" (featurep 'ox-altacv))
 (export-latex 'moderncv "moderncv.org")
 (export-latex 'altacv "altacv.org")
-(export-latex 'awesomecv "awesomecv.org")
+(export-latex 'awesomecv2 "awesomecv.org")
 (export-latex 'awesomecv "awesome-letter.org")
