@@ -1,7 +1,7 @@
 (defvar cv-cwd default-directory
   "remember the current directory, find-file changes it")
 (defvar cv-workdir "/tmp/org-cv-exports/")
-
+(toggle-debug-on-error)
 (with-current-buffer (find-file-noselect "/tmp/install-org.el")
   (eval-buffer))
 
@@ -12,8 +12,8 @@
 
 (use-package ox-moderncv
   :load-path cv-cwd
+  :ensure dash
   :init
-  (require 'ox-moderncv)
   (require 'ox-altacv)
   (require 'ox-hugocv)
   (require 'ox-awesomecv))
@@ -26,8 +26,11 @@
     (with-current-buffer
         (find-file-noselect workfile)
       (org-mode)
+      (message "back %S, out %S" backend outfile)
       (org-export-to-file backend outfile)
-      (shell-command (format "lualatex %s" outfile) "*Messages*" "*Messages*")
+      (message (format "%s exists: %s" outfile (file-exists-p outfile)))
+      (shell-command (format "xelatex --output-directory=%s %s" cv-workdir outfile) "*Messages*" "*Messages*")
+      (message (format "%s exists: %s" pdffile (file-exists-p pdffile)))
       (copy-file pdffile (concat cv-cwd "/doc/static/" (concat file ".pdf")) t))))
 
 (let ((readme (concat cv-cwd "readme.org")))
@@ -39,7 +42,8 @@
 
 (copy-file (concat cv-cwd "doc/smile.png") cv-workdir t)
 (make-directory (concat cv-cwd "/doc/static/") t)
-(export-latex 'altacv "altacv.org")
+(message "alta %s" (featurep 'ox-altacv))
 (export-latex 'moderncv "moderncv.org")
+(export-latex 'altacv "altacv.org")
 (export-latex 'awesomecv "awesomecv.org")
 (export-latex 'awesomecv "awesome-letter.org")

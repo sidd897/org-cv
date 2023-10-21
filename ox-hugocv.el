@@ -1,5 +1,6 @@
 ;;; ox-hugocv.el --- LaTeX hugocv Back-End for Org Export Engine -*- lexical-binding: t; -*-
 
+;; Package-Requires: ((dash "2.19.1"))
 ;; Copyright (C) 2018 Free Software Foundation, Inc.
 
 ;; Author: Oscar Najera <hi AT oscarnajera.com DOT com>
