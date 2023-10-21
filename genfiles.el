@@ -1,6 +1,6 @@
 (defvar cv-cwd default-directory
   "remember the current directory, find-file changes it")
-(defvar cv-workdir "/tmp/org-cv-exports/")
+(defvar cv-workdir (expand-file-name "org-cv-exports/"))
 (toggle-debug-on-error)
 (with-current-buffer (find-file-noselect "/tmp/install-org.el")
   (eval-buffer))
@@ -44,7 +44,7 @@
 (copy-file (concat cv-cwd "doc/smile.png") cv-workdir t)
 (make-directory (concat cv-cwd "/doc/static/") t)
 (message "alta %s" (featurep 'ox-altacv))
-(export-latex 'moderncv "moderncv.org")
 (export-latex 'altacv "altacv.org")
+(export-latex 'moderncv "moderncv.org")
 (export-latex 'awesomecv2 "awesomecv.org")
 (export-latex 'awesomecv "awesome-letter.org")
