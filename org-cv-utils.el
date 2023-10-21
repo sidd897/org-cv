@@ -55,7 +55,7 @@ If both dates are the same, return just FROM-DATE"
               (org-cv-utils-org-timestamp-to-shortdate to-date))))
 
     (if from
-        (if (or (string= from to) (string-equal-ignore-case to "skip"))
+        (if (or (string= from to))
             from
           (concat from " -- " to))
       "")))
@@ -63,13 +63,23 @@ If both dates are the same, return just FROM-DATE"
 (defun org-cv-utils--parse-cventry (headline info)
   "Return alist describing the entry in HEADLINE.
 INFO is a plist used as a communication channel."
-  (let ((title (org-export-data (org-element-property :title headline) info)))
+  (let* ((title (org-export-data (org-element-property :title headline) info))
+         (date (org-element-property :DATE headline))
+         (from-date (or (org-element-property :FROM headline) date))
+         (to-date (or (org-element-property :TO headline) date))
+         (host (or (org-element-property :HOST headline)
+                   (org-element-property :ORGANIZATION headline)
+                   (org-element-property :INSTITUTION headline)
+                   (org-element-property :SCHOOL headline)
+                   (org-element-property :EMPLOYER headline)
+                   (org-element-property :EVENT headline) "")))
     `((title . ,title)
-      (from-date . ,(or (org-element-property :FROM headline)
+      (from-date . ,(or from-date
                         (error "No FROM property provided for cventry %s" title)))
-      (to-date . ,(org-element-property :TO headline))
-      (employer . ,(org-element-property :EMPLOYER headline))
-      (location . ,(or (org-element-property :LOCATION headline) "")))))
+      (to-date . ,to-date)
+      (host . ,host)
+      (location . ,(or (org-element-property :LOCATION headline) ""))
+      (image . ,(org-element-property :IMAGE headline)))))
 
 (provide 'org-cv-utils)
 ;;; org-cv-utils.el ends here

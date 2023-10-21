@@ -57,8 +57,8 @@
 (defun org-hugocv--entry-with-icon (field entry)
   "HTML entry for given FIELD when it is specified in ENTRY."
   (cl-ecase field
-    (employer
-     (-some->> (alist-get 'employer entry)
+    (host
+     (-some->> (alist-get 'host entry)
        (format "%s\n{.cv-host}")))
     (date
      (-some->>
@@ -73,14 +73,19 @@
   "Format HEADLINE as as cventry.
 CONTENTS holds the contents of the headline.  INFO is a plist used
 as a communication channel."
-  (let* ((entry (org-cv-utils--parse-cventry headline info))
+  (let* ((environment (org-export-get-tags headline info))
+         (env-class (string-replace "cv" "" (cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)))
+         (entry (org-cv-utils--parse-cventry headline info))
          (loffset (string-to-number (plist-get info :hugo-level-offset))) ;"" -> 0, "0" -> 0, "1" -> 1, ..
          (level (org-export-get-relative-level headline info))
-         (title (concat (make-string (+ loffset level) ?#) " " (alist-get 'title entry))))
-    (format "<div class=\"cv-entry\">\n\n%s\n\n%s\n\n%s\n</div>"
-            (concat title "  {.cv-role}")
+         (title (concat (make-string (+ loffset level) ?#) " "
+                        (alist-get 'title entry)
+                        "  {.cv-role}")))
+    (format "<div class=\"cv-%s\">\n\n%s\n\n%s\n\n%s\n</div>"
+            env-class
+            title
             (mapconcat (lambda (field) (org-hugocv--entry-with-icon field entry))
-                       '(employer date location)
+                       '(host date location)
                        "\n")
             contents)))
 
@@ -92,7 +97,7 @@ as a communication channel."
   (unless (org-element-property :footnote-section-p headline)
     (let ((environment (org-export-get-tags headline info)))
       (cond
-       ((seq-intersection environment '("cventry"))
+       ((cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)
         (org-hugocv--format-cventry headline contents info))
        ((org-export-with-backend 'hugo headline contents info))))))
 
