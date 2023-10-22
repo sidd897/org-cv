@@ -52,4 +52,6 @@
 (export-latex 'awesomecv2 "awesomecv.org")
 (export-latex 'awesomecv "awesomecv.org")
 (export-latex 'awesomecv "awesome-letter.org")
-(export-with 'hugocv "hugocv.org" ".md")
+(copy-file
+ (export-with 'hugocv "hugocv.org" ".md")
+ (concat cv-cwd "/doc/content/post/cv.md"))

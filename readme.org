@@ -458,16 +458,31 @@ Each entry is inside a =div= container and each element of the properties has
 its own class.
 
 #+begin_src org :exports none :tangle hugocv.org
-,#+HTML_HEAD: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+,#+HTML: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+,#+HTML: <link rel="stylesheet" href="/css/cv.css" />
+#+end_src
+
+Make sure that your hugo config has the markup parser attributes active
+#+begin_src yaml
+markup:
+  goldmark:
+    parser:
+      attribute:
+        title: true
+        block: true
 #+end_src
 
 # Next block is to generate exports
 #+BEGIN_SRC org :exports none :tangle hugocv.org
-#+include: basic_cv.org
-#+include: sideactivities.org
-#+include: workcontent.org
+,#+hugo_custom_front_matter: :weight
+,#+include: basic_cv.org
+,#+include: sideactivities.org
+,#+include: workcontent.org
 #+END_SRC
 
+#+BEGIN_EXPORT md
+<iframe src="/post/cv/" title="rendered CV"></iframe>
+#+END_EXPORT
 * License
   :PROPERTIES:
   :EXPORT_FILE_NAME: license

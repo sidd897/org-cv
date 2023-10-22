@@ -20,4 +20,15 @@ You are responsible for styling your website. Use all the CSS magic you know.
 Each entry is inside a `div` container and each element of the properties has
 its own class.
 
-\#+end_src
+Make sure that your hugo config has the markup parser attributes active
+
+```yaml
+markup:
+  goldmark:
+    parser:
+      attribute:
+        title: true
+        block: true
+```
+
+<iframe src="/post/cv/" title="rendered CV"></iframe>
