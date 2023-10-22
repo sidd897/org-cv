@@ -231,7 +231,11 @@ holding export options."
   "Format HEADLINE as as cventry.
 CONTENTS holds the contents of the headline.  INFO is a plist used
 as a communication channel."
-  (let* ((entrytype (org-element-property :CV_ENV headline))
+  (let* ((entrytype
+          (cl-find-if (lambda (s) (or (string-prefix-p "cv" s)
+                                      (string-prefix-p "letter" s)))
+                      (cons (org-element-property :CV_ENV headline)
+                            (org-export-get-tags headline info))))
          (title (org-export-data (org-element-property :title headline) info))
          (date (org-element-property :DATE headline))
          (from-date (or (org-element-property :FROM headline) date))
