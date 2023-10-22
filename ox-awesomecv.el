@@ -275,9 +275,9 @@ as a communication channel."
       )
      ((string= entrytype "cventry")
       (format "\n\\cventry\n{%s}\n{%s}\n{%s}\n{%s}\n{%s%s}\n"
+              title
               employer
               location
-              title
               (org-cv-utils--format-time-window from-date to-date)
               (org-awesomecv--cventry-right-img-code right-img)
               contents))
@@ -347,18 +347,17 @@ as a communication channel."
        (when pagebreak "\\clearpage\n")
        (cond
         ;; is a cv entry or subentry
-        ((or (string= environment "cventry")
-             (string= environment "cvsubentry")
-             (string= environment "cvemployer")
-             (string= environment "cvschool")
-             (string= environment "cvhonor")
-             (string= environment "cvletter")
-             (string= environment "cvletter_notitle")
-             (string= environment "lettersection")
-             (string= environment "letterheader")
-             )
+        ((member environment  '("cventry"
+                                "cvsubentry"
+                                "cvemployer"
+                                "cvschool"
+                                "cvhonor"
+                                "cvletter"
+                                "cvletter_notitle"
+                                "lettersection"
+                                "letterheader"))
          (org-awesomecv--format-cventry headline contents info))
-        ((or (string= environment "cventries") (string= environment "cvhonors"))
+        ((member environment '("cventries" "cvhonors"))
          (org-awesomecv--format-cvenvironment environment headline contents info))
         ((org-export-with-backend 'latex headline contents info)))))))
 
