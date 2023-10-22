@@ -66,7 +66,7 @@ put your foreseen job.
 | PHOTO    | path to photo file                                 |
 
 #+BEGIN_SRC org :tangle basic_cv.org
-,#+TITLE: My dream job
+,#+TITLE: My dream job an ORG-CV example
 ,#+AUTHOR: John Doe
 ,#+email: john@doe.lost
 ,#+options: tags:nil
@@ -82,7 +82,7 @@ put your foreseen job.
 #+END_SRC
 
 You can use org-modes hierarchical structure to describe your CV. To make a
-specific subtree an item describing an experience point (Job you have, degree
+specific sub-tree an item describing an experience point (Job you have, degree
 you pursued, etc.) you use the org properties drawer and with the =:CV_ENV:
 cventry= property. You should also include the =FROM= and =TO= properties
 defining the span of the entry, as well as =LOCATION= and =EMPLOYER=.
@@ -457,15 +457,13 @@ You are responsible for styling your website. Use all the CSS magic you know.
 Each entry is inside a =div= container and each element of the properties has
 its own class.
 
-#+begin_src org :exports none :tangle hugocv.org
-,#+HTML: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-,#+HTML: <link rel="stylesheet" href="/css/cv.css" />
-#+end_src
-
-Make sure that your hugo config has the markup parser attributes active
+Make sure that your hugo config has the markup parser attributes active and allows
+for html rendering.
 #+begin_src yaml
 markup:
   goldmark:
+    renderer:
+      unsafe: true
     parser:
       attribute:
         title: true
@@ -474,15 +472,40 @@ markup:
 
 # Next block is to generate exports
 #+BEGIN_SRC org :exports none :tangle hugocv.org
-,#+hugo_custom_front_matter: :weight
+,#+hugo_custom_front_matter: :weight 1006
 ,#+include: basic_cv.org
-,#+include: sideactivities.org
 ,#+include: workcontent.org
+
+# (org-export-to-file 'hugocv "doc/content/post/cv.md")
 #+END_SRC
 
-#+BEGIN_EXPORT md
-<iframe src="/post/cv/" title="rendered CV"></iframe>
-#+END_EXPORT
+You can also use an awards section for a different styling.  Here you tag each
+entry with =cvhonor=.
+#+BEGIN_SRC org :tangle hugocv.org
+,* Awards
+,** First place  :cvhonor:
+:PROPERTIES:
+:CV_ENV: cventry
+:DATE:     <2014-09-01>
+:LOCATION: a city, a country
+:EVENT: The RACE
+:END:
+
+,** Sport Scholarship  :cvhonor:
+:PROPERTIES:
+:DATE:     <2013-09-01>
+:LOCATION: my city, your country
+:ORGANIZATION: The nice millionaire
+:END:
+
+#+END_SRC
+
+Next is the rendered result for the special entries with styling.
+* CV
+  :PROPERTIES:
+  :EXPORT_FILE_NAME: cv
+  :END:
+  Place holder stuff
 * License
   :PROPERTIES:
   :EXPORT_FILE_NAME: license

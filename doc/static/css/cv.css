@@ -1,3 +1,12 @@
+.cv-entry .cv-host,
+.cv-entry .cv-date,
+.cv-entry .cv-location,
+.cv-honor .cv-host,
+.cv-honor .cv-date,
+.cv-honor .cv-location {
+  margin: 0;
+}
+
 .cv-entry .cv-host::before,
 .cv-honor .cv-host::before {
   font-family: "Font Awesome 6 Free";
@@ -33,7 +42,7 @@
 }
 
 .cv-honor .cv-role {
-  margin-left: 3.25rem;
+  margin-left: 5.5rem;
 }
 
 .cv-honor .cv-date {
@@ -97,17 +106,6 @@
   padding-bottom: 0.5rem;
   margin-left: 1rem;
   position: relative;
-}
-
-.cv-honor .cv-role,
-.cv-entry .cv-role,
-.cv-entry .cv-host,
-.cv-entry .cv-date,
-.cv-entry .cv-location,
-.cv-honor .cv-host,
-.cv-honor .cv-date,
-.cv-honor .cv-location {
-  margin: 0;
 }
 
 .cv-entry p,

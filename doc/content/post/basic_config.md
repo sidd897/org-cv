@@ -31,7 +31,7 @@ put your foreseen job.
 </div>
 
 ```org
-#+TITLE: My dream job
+#+TITLE: My dream job an ORG-CV example
 #+AUTHOR: John Doe
 #+email: john@doe.lost
 #+options: tags:nil

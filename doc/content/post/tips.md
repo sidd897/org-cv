@@ -2,7 +2,7 @@
 title = "Tips"
 author = ["Óscar Nájera"]
 draft = false
-weight = 1007
+weight = 1008
 +++
 
 If you have found this project useful. Please consider giving back. You can

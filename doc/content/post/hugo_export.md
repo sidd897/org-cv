@@ -20,15 +20,39 @@ You are responsible for styling your website. Use all the CSS magic you know.
 Each entry is inside a `div` container and each element of the properties has
 its own class.
 
-Make sure that your hugo config has the markup parser attributes active
+Make sure that your hugo config has the markup parser attributes active and allows
+for html rendering.
 
 ```yaml
 markup:
   goldmark:
+    renderer:
+      unsafe: true
     parser:
       attribute:
         title: true
         block: true
 ```
 
-<iframe src="/post/cv/" title="rendered CV"></iframe>
+You can also use an awards section for a different styling.  Here you tag each
+entry with `cvhonor`.
+
+```org
+* Awards
+** First place  :cvhonor:
+:PROPERTIES:
+:CV_ENV: cventry
+:DATE:     <2014-09-01>
+:LOCATION: a city, a country
+:EVENT: The RACE
+:END:
+
+** Sport Scholarship  :cvhonor:
+:PROPERTIES:
+:DATE:     <2013-09-01>
+:LOCATION: my city, your country
+:ORGANIZATION: The nice millionaire
+:END:
+```
+
+Next is the rendered result for the special entries with styling.

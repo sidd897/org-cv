@@ -2,7 +2,7 @@
 title = "License"
 author = ["Óscar Nájera"]
 draft = false
-weight = 1006
+weight = 1007
 +++
 
 > org-cv
