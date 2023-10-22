@@ -59,10 +59,11 @@
   (cl-ecase field
     (host
      (-some->> (alist-get 'host entry)
+       (org-string-nw-p)
        (format "%s\n{.cv-host}")))
     (date
      (-some->>
-         (org-cv-utils--format-time-window (alist-get 'from-date entry) (alist-get 'to-date entry))
+         (alist-get 'date entry)
        (format "%s\n{.cv-date}")))
     (location
      (-some->> (alist-get 'location entry)
@@ -74,7 +75,7 @@
 CONTENTS holds the contents of the headline.  INFO is a plist used
 as a communication channel."
   (let* ((environment (org-export-get-tags headline info))
-         (env-class (string-replace "cv" "" (cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)))
+         (env-class (replace-regexp-in-string "^cv" "" (cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)))
          (entry (org-cv-utils--parse-cventry headline info))
          (loffset (string-to-number (plist-get info :hugo-level-offset))) ;"" -> 0, "0" -> 0, "1" -> 1, ..
          (level (org-export-get-relative-level headline info))
@@ -98,7 +99,10 @@ as a communication channel."
     (let ((environment (cons (org-element-property :CV_ENV headline)
                              (org-export-get-tags headline info))))
       (cond
-       ((cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)
+       ((cl-find-if (lambda (s) (and (string-prefix-p "cv" s)
+                                     ;; avoid conflict with awesomecv block environments
+                                     (not (member s '("cventries" "cvhonors")))))
+                    environment)
         (org-hugocv--format-cventry headline contents info))
        ((org-export-with-backend 'hugo headline contents info))))))
 

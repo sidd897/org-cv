@@ -453,7 +453,14 @@ exclude some tags during export.
      (org-export-to-file 'hugocv "hugocv.md"))
 #+END_SRC
 
-You are responsible for styling your website.
+You are responsible for styling your website. Use all the CSS magic you know.
+Each entry is inside a =div= container and each element of the properties has
+its own class.
+
+#+begin_src org :exports none :tangle hugocv.org
+,#+HTML_HEAD: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+#+end_src
+
 # Next block is to generate exports
 #+BEGIN_SRC org :exports none :tangle hugocv.org
 #+include: basic_cv.org

@@ -16,4 +16,8 @@ exclude some tags during export.
      (org-export-to-file 'hugocv "hugocv.md"))
 ```
 
-You are responsible for styling your website.
+You are responsible for styling your website. Use all the CSS magic you know.
+Each entry is inside a `div` container and each element of the properties has
+its own class.
+
+\#+end_src
