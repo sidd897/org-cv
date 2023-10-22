@@ -340,25 +340,26 @@ as a communication channel."
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
   (unless (org-element-property :footnote-section-p headline)
-    (let ((environment (let ((env (org-element-property :CV_ENV headline)))
-                         (or (org-string-nw-p env) "block")))
+    (let ((environment (cons (org-element-property :CV_ENV headline)
+                             (org-export-get-tags headline info)))
           (pagebreak (org-string-nw-p (org-element-property :PAGEBREAK headline))))
       (concat
        (when pagebreak "\\clearpage\n")
        (cond
         ;; is a cv entry or subentry
-        ((member environment  '("cventry"
-                                "cvsubentry"
-                                "cvemployer"
-                                "cvschool"
-                                "cvhonor"
-                                "cvletter"
-                                "cvletter_notitle"
-                                "lettersection"
-                                "letterheader"))
+        ((seq-intersection environment  '("cventry"
+                                          "cvsubentry"
+                                          "cvemployer"
+                                          "cvschool"
+                                          "cvhonor"
+                                          "cvletter"
+                                          "cvletter_notitle"
+                                          "lettersection"
+                                          "letterheader"))
          (org-awesomecv--format-cventry headline contents info))
-        ((member environment '("cventries" "cvhonors"))
-         (org-awesomecv--format-cvenvironment environment headline contents info))
+        ((seq-intersection environment '("cventries" "cvhonors"))
+         (org-awesomecv--format-cvenvironment
+          (car (seq-intersection environment '("cventries" "cvhonors"))) headline contents info))
         ((org-export-with-backend 'latex headline contents info)))))))
 
 ;;;; Plain List, to intercept and transform "cvskills" lists

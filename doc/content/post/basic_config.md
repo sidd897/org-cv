@@ -74,7 +74,6 @@ instead of a range. Both `FROM` and `TO` override `DATE`.
 I write about awesome stuff I do.
 ** Other job  :cventry:
 :PROPERTIES:
-:CV_ENV: cventry
 :FROM:     <2013-09-01>
 :TO:     <2014-08-07>
 :LOCATION: my city, your country

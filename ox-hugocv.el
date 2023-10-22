@@ -95,7 +95,8 @@ as a communication channel."
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
   (unless (org-element-property :footnote-section-p headline)
-    (let ((environment (org-export-get-tags headline info)))
+    (let ((environment (cons (org-element-property :CV_ENV headline)
+                             (org-export-get-tags headline info))))
       (cond
        ((cl-find-if (lambda (s) (string-prefix-p "cv" s)) environment)
         (org-hugocv--format-cventry headline contents info))

@@ -109,7 +109,6 @@ instead of a range. Both =FROM= and =TO= override =DATE=.
 I write about awesome stuff I do.
 ,** Other job  :cventry:
 :PROPERTIES:
-:CV_ENV: cventry
 :FROM:     <2013-09-01>
 :TO:     <2014-08-07>
 :LOCATION: my city, your country
@@ -455,6 +454,12 @@ exclude some tags during export.
 #+END_SRC
 
 You are responsible for styling your website.
+# Next block is to generate exports
+#+BEGIN_SRC org :exports none :tangle hugocv.org
+#+include: basic_cv.org
+#+include: sideactivities.org
+#+include: workcontent.org
+#+END_SRC
 
 * License
   :PROPERTIES:

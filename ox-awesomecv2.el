@@ -263,11 +263,13 @@ as a communication channel."
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
   (unless (org-element-property :footnote-section-p headline)
-    (let ((environment (org-export-get-tags headline info)))
+    (let ((environment (cons (org-element-property :CV_ENV headline)
+                             (org-export-get-tags headline info))))
       (cond
        ;; is a cv entry
        ((seq-intersection environment '("cventries" "cvhonors"))
-        (org-cv-awesome2--format-cvenvironment (car environment) headline contents info))
+        (org-cv-awesome2--format-cvenvironment
+         (car (seq-intersection environment '("cventries" "cvhonors"))) headline contents info))
        ((seq-intersection environment '("cventry" "cvhonor"))
         (org-cv-awesome2--entry headline contents info))
        ((org-export-with-backend 'latex headline contents info))))))

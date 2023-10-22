@@ -47,4 +47,6 @@
 (export-latex 'altacv "altacv.org")
 (export-latex 'moderncv "moderncv.org")
 (export-latex 'awesomecv2 "awesomecv.org")
+(export-latex 'awesomecv "awesomecv.org")
 (export-latex 'awesomecv "awesome-letter.org")
+(export-latex 'hugocv "hugocv.org")
