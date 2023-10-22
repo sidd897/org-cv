@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-wget https://github.com/gohugoio/hugo/releases/download/v0.39/hugo_0.39_Linux-64bit.deb
+wget https://github.com/gohugoio/hugo/releases/download/v0.100.2/hugo_0.100.2_Linux-64bit.deb
 dpkg -i hugo*.deb
 
 echo "Installed Hugo:"

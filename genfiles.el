@@ -33,6 +33,7 @@
 (defun export-latex (backend file)
   (let ((outfile (export-with backend file ".tex"))
         (pdffile (concat cv-workdir file ".pdf")))
+    (cd cv-workdir)
     (message (format "%s exists: %s" outfile (file-exists-p outfile)))
     (shell-command (format "xelatex --output-directory=%s %s" cv-workdir outfile) "*Messages*" "*Messages*")
     (message (format "%s exists: %s" pdffile (file-exists-p pdffile)))
