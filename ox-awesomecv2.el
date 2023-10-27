@@ -58,7 +58,7 @@
   :options-alist
   '((:latex-class "LATEX_CLASS" nil "awesomecv" t)
     (:cvstyle "CVSTYLE" nil "classic" t)
-    (:cvcolor "CVCOLOR" nil "awesome-emerald" t)
+    (:cvcolor "CVCOLOR" nil "awesome-red" t)
     (:cvcolorizelinks "CVCOLORIZELINKS" nil nil t)
     (:cvunderlinelinks "CVUNDERLINELINKS" nil nil t)
     (:mobile "MOBILE" nil nil parse)
