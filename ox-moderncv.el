@@ -55,7 +55,7 @@
   :options-alist
   '((:latex-class "LATEX_CLASS" nil "moderncv" t)
     (:cvstyle "CVSTYLE" nil "classic" t)
-    (:cvcolor "CVCOLOR" nil nil t)
+    (:cvcolor "CVCOLOR" nil "blue" t)
     (:mobile "MOBILE" nil nil parse)
     (:homepage "HOMEPAGE" nil nil parse)
     (:address "ADDRESS" nil nil newline)
