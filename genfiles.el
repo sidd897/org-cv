@@ -5,6 +5,8 @@
 (with-current-buffer (find-file-noselect "/tmp/install-org.el")
   (eval-buffer))
 
+(package-refresh-contents)
+
 (use-package ox-hugo
   :ensure t
   :pin melpa
