@@ -104,6 +104,7 @@ instead of a range. Both =FROM= and =TO= override =DATE=.
 :TO:     <2017-12-07>
 :LOCATION: a city, a country
 :EMPLOYER: The employer
+:NOTE: Extra note: everybody here loved me
 :END:
 
 I write about awesome stuff I do.
@@ -148,6 +149,10 @@ org file.
 #+include: sideactivities.org
 #+include: workcontent.org
 #+END_SRC
+
+Additionally in the org property drawers for a =cventry= you can use the =NOTE=
+property for additional information on the entry.
+
 When exporting you can call the following function to get the latex file.
 #+BEGIN_SRC emacs-lisp
 (org-export-to-file 'moderncv "moderncv.tex")

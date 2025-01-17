@@ -22,6 +22,9 @@ org file.
 #+CVCOLOR: green
 ```
 
+Additionally in the org property drawers for a `cventry` you can use the `NOTE`
+property for additional information on the entry.
+
 When exporting you can call the following function to get the latex file.
 
 ```emacs-lisp

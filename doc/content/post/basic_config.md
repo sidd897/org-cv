@@ -47,7 +47,7 @@ put your foreseen job.
 ```
 
 You can use org-modes hierarchical structure to describe your CV. To make a
-specific subtree an item describing an experience point (Job you have, degree
+specific sub-tree an item describing an experience point (Job you have, degree
 you pursued, etc.) you use the org properties drawer and with the `:CV_ENV:
 cventry` property. You should also include the `FROM` and `TO` properties
 defining the span of the entry, as well as `LOCATION` and `EMPLOYER`.
@@ -69,6 +69,7 @@ instead of a range. Both `FROM` and `TO` override `DATE`.
 :TO:     <2017-12-07>
 :LOCATION: a city, a country
 :EMPLOYER: The employer
+:NOTE: Extra note: everybody here loved me
 :END:
 
 I write about awesome stuff I do.
