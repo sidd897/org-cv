@@ -60,15 +60,15 @@
     (host
      (-some->> (alist-get 'host entry)
        (org-string-nw-p)
-       (format "%s\n{.cv-host}")))
+       (format "<i></i>%s\n{.cv-host}")))
     (date
      (-some->>
          (alist-get 'date entry)
-       (format "%s\n{.cv-date}")))
+       (format "<i></i>%s\n{.cv-date}")))
     (location
      (-some->> (alist-get 'location entry)
        (org-string-nw-p)
-       (format "%s\n{.cv-location}")))))
+       (format "<i></i>%s\n{.cv-location}")))))
 
 (defun org-hugocv--format-cventry (headline contents info)
   "Format HEADLINE as as cventry.
