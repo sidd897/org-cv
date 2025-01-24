@@ -64,6 +64,8 @@
     (:github "GITHUB" nil nil parse)
     (:linkedin "LINKEDIN" nil nil parse)
     (:with-email nil "email" t t)
+    (:firstname "FIRSTNAME" nil nil t)
+    (:lastname "LASTNAME" nil nil t)
     )
   :translate-alist '((template . org-moderncv-template)
                      (headline . org-moderncv-headline)))
@@ -98,11 +100,14 @@ holding export options."
      (let ((sec-num (plist-get info :section-numbers)))
        (when (integerp sec-num)
          (format "\\setcounter{secnumdepth}{%d}\n" sec-num)))
-     ;; Author.
-     (let ((author (and (plist-get info :with-author)
-                        (let ((auth (plist-get info :author)))
-                          (and auth (org-export-data auth info))))))
-       (format "\\name{%s}{}\n" author))
+     ;; Author. If FIRSTNAME or LASTNAME are not given, try to deduct
+     ;; their values by splitting AUTHOR on white space.
+     (let* ((author (split-string (org-export-data (plist-get info :author) info)))
+            (first-name-prop (org-export-data (plist-get info :firstname) info))
+            (last-name-prop (org-export-data (plist-get info :lastname) info))
+            (first-name (or (org-string-nw-p first-name-prop) (car author)))
+            (last-name (or (org-string-nw-p last-name-prop) (cadr author))))
+       (format "\\name{%s}{%s}\n" first-name last-name))
      ;; photo
      (let ((photo (org-export-data (plist-get info :photo) info)))
        (when (org-string-nw-p photo)
