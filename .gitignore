@@ -1,2 +1,6 @@
 *.elc
 /dev.org
+.dir-locals.el
+Makefile
+*~
+test/
