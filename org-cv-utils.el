@@ -51,8 +51,10 @@ FROM-DATE -- TO-DATE
 in case TO-DATE is nil return Present.
 If both dates are the same, return just FROM-DATE"
   (let ((from (org-cv-utils-org-timestamp-to-shortdate from-date))
-        (to (if (not to-date) "Present"
-              (org-cv-utils-org-timestamp-to-shortdate to-date))))
+        (to
+         (if (not to-date)
+             "Present"
+           (org-cv-utils-org-timestamp-to-shortdate to-date))))
     (if (or (string= from to))
         from
       (concat from " -- " to))))
@@ -62,18 +64,21 @@ If both dates are the same, return just FROM-DATE"
 INFO is a plist used as a communication channel."
   (let* ((title (org-export-data (org-element-property :title headline) info))
          (date (org-element-property :DATE headline))
-         (from-date (or (org-element-property :FROM headline)
-                        date
-                        (user-error "No FROM property provided for cventry %s" title)))
+         (from-date
+          (or (org-element-property :FROM headline)
+              date
+              (user-error "No FROM property provided for cventry %s" title)))
          (to-date (or (org-element-property :TO headline) date))
-         (host (or (org-element-property :HOST headline)
-                   (org-element-property :ORGANIZATION headline)
-                   (org-element-property :INSTITUTION headline)
-                   (org-element-property :SCHOOL headline)
-                   (org-element-property :EMPLOYER headline)
-                   (org-element-property :EVENT headline) "")))
+         (host
+          (or (org-element-property :HOST headline)
+              (org-element-property :ORGANIZATION headline)
+              (org-element-property :INSTITUTION headline)
+              (org-element-property :SCHOOL headline)
+              (org-element-property :EMPLOYER headline)
+              (org-element-property :EVENT headline)
+              "")))
     `((title . ,title)
-      (date . , (org-cv-utils--format-time-window from-date to-date))
+      (date . ,(org-cv-utils--format-time-window from-date to-date))
       (host . ,host)
       (location . ,(or (org-element-property :LOCATION headline) ""))
       (image . ,(org-element-property :IMAGE headline)))))
@@ -93,36 +98,38 @@ a plist used as a communication channel"
   "Return alist describing the entry in `cvitem' HEADLINE. INFO is a plist
 used as a communication channel"
   (let* ((descr (org-export-data (org-element-property :title headline) info))
-         (items (or (org-element-property :ITEMS headline)
-                    (user-error "No ITEMS provided for cvitem %s" title))))
-    `((description . ,descr)
-      (items . ,items))))
+         (items
+          (or (org-element-property :ITEMS headline)
+              (user-error "No ITEMS provided for cvitem %s" title))))
+    `((description . ,descr) (items . ,items))))
 
 (defun org-cv-utils--parse-cvcolumn (headline info)
   "Return alist describing the entry in `cvcolumn' HEADLINE. INFO is a plist
 used as a communication channel"
-  (let* ((category (org-export-data (org-element-property :title headline) info))
+  (let* ((category
+          (org-export-data (org-element-property :title headline) info))
          (width (org-element-property :WIDTH headline))
          (job (org-element-property :JOB headline))
-         (dept (org-export-data (org-element-property :DEPARTMENT headline) info))
-         (school (org-export-data (org-element-property :SCHOOL headline) info))
+         (dept
+          (org-export-data (org-element-property :DEPARTMENT headline) info))
+         (school
+          (org-export-data (org-element-property :SCHOOL headline) info))
          (phone (org-export-data (org-element-property :PHONE headline) info))
          (email (org-export-data (org-element-property :EMAIL headline) info))
-         (content (or (replace-regexp-in-string "\\(\\\\\\\\\\)+" "\\\\\\\\"
-                       (string-trim
-                        (string-join
-                         `(,(and job (format "\\textit{%s}" job))
-                           ,dept
-                           ,school
-                           ,phone
-                           ,email
-                           ,(org-export-data (org-element-property :CONTENT headline) info)) "\\\\")
-                        "\\(\\\\\\\\\\)+"
-                        "\\(\\\\\\\\\\)+"))
-                      (user-error "No CONTENT provided for cvcolumn %s" title))))
-    `((category . ,category)
-      (content . ,content)
-      (width . ,width))))
+         (content
+          (or (replace-regexp-in-string
+               "\\(\\\\\\\\\\)+" "\\\\\\\\"
+               (string-trim
+                (string-join
+                 `(,(and job
+                         (format "\\textit{%s}" job))
+                   ,dept ,school ,phone ,email
+                   ,(org-export-data
+                     (org-element-property :CONTENT headline) info))
+                 "\\\\")
+                "\\(\\\\\\\\\\)+" "\\(\\\\\\\\\\)+"))
+              (user-error "No CONTENT provided for cvcolumn %s" title))))
+    `((category . ,category) (content . ,content) (width . ,width))))
 
 (provide 'org-cv-utils)
 ;;; org-cv-utils.el ends here
