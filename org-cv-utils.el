@@ -78,5 +78,51 @@ INFO is a plist used as a communication channel."
       (location . ,(or (org-element-property :LOCATION headline) ""))
       (image . ,(org-element-property :IMAGE headline)))))
 
+(defun org-cv-utils--cvcolumns-under-node (node info)
+  "Count the number of headlines having tag `cvcolumn' under NODE. INFO is
+a plist used as a communication channel"
+  (length
+   (let ((contents (org-element-contents node)))
+     (seq-filter
+      (lambda (content)
+        (and (eq (org-element-type content) 'headline)
+             (member "cvcolumn" (org-export-get-tags content info))))
+      contents))))
+
+(defun org-cv-utils--parse-cvitem (headline info)
+  "Return alist describing the entry in `cvitem' HEADLINE. INFO is a plist
+used as a communication channel"
+  (let* ((descr (org-export-data (org-element-property :title headline) info))
+         (items (or (org-element-property :ITEMS headline)
+                    (user-error "No ITEMS provided for cvitem %s" title))))
+    `((description . ,descr)
+      (items . ,items))))
+
+(defun org-cv-utils--parse-cvcolumn (headline info)
+  "Return alist describing the entry in `cvcolumn' HEADLINE. INFO is a plist
+used as a communication channel"
+  (let* ((category (org-export-data (org-element-property :title headline) info))
+         (width (org-element-property :WIDTH headline))
+         (job (org-element-property :JOB headline))
+         (dept (org-export-data (org-element-property :DEPARTMENT headline) info))
+         (school (org-export-data (org-element-property :SCHOOL headline) info))
+         (phone (org-export-data (org-element-property :PHONE headline) info))
+         (email (org-export-data (org-element-property :EMAIL headline) info))
+         (content (or (replace-regexp-in-string "\\(\\\\\\\\\\)+" "\\\\\\\\"
+                       (string-trim
+                        (string-join
+                         `(,(and job (format "\\textit{%s}" job))
+                           ,dept
+                           ,school
+                           ,phone
+                           ,email
+                           ,(org-export-data (org-element-property :CONTENT headline) info)) "\\\\")
+                        "\\(\\\\\\\\\\)+"
+                        "\\(\\\\\\\\\\)+"))
+                      (user-error "No CONTENT provided for cvcolumn %s" title))))
+    `((category . ,category)
+      (content . ,content)
+      (width . ,width))))
+
 (provide 'org-cv-utils)
 ;;; org-cv-utils.el ends here
