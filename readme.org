@@ -52,18 +52,20 @@ The basic structure of an org file containing your CV is shown next.
 put your foreseen job.
 
 #+attr_html: :class table table-striped
-| Field    | Description                                        |
-|----------+----------------------------------------------------|
-| TITLE    | Desired job                                        |
-| AUTHOR   | Who are you?                                       |
-| EMAIL    | Your contact email                                 |
-| ADDRESS  | Mailing address, this can span over multiple lines |
-| HOMEPAGE | URL of your website                                |
-| MOBILE   | Mobile phone                                       |
-| GITHUB   | GitHub user                                        |
-| GITLAB   | GitLab user                                        |
-| LINKEDIN | Linkedin username                                  |
-| PHOTO    | path to photo file                                 |
+| Field             | Description                                        |
+|-------------------+----------------------------------------------------|
+| TITLE             | Desired job                                        |
+| AUTHOR            | Who are you?                                       |
+| EMAIL             | Your contact email                                 |
+| ADDRESS           | Mailing address, this can span over multiple lines |
+| HOMEPAGE          | URL of your website                                |
+| MOBILE            | Mobile phone                                       |
+| GITHUB            | GitHub user                                        |
+| GITLAB            | GitLab user                                        |
+| LINKEDIN          | Linkedin username                                  |
+| PHOTO             | path to photo file                                 |
+| PHOTO_HEIGHT      | height of the photo (only for moderncv)            |
+| PHOTO_FRAME_WIDTH | photo frame width (only for moderncv)              |
 
 #+BEGIN_SRC org :tangle basic_cv.org
 ,#+TITLE: My dream job an ORG-CV example
@@ -81,6 +83,7 @@ put your foreseen job.
 ,#+PHOTO: smile.png
 #+END_SRC
 
+** Headlines of type =cventry=
 You can use org-modes hierarchical structure to describe your CV. To make a
 specific sub-tree an item describing an experience point (Job you have, degree
 you pursued, etc.) you use the org properties drawer and with the =:CV_ENV:
@@ -123,6 +126,26 @@ I write about awesome stuff I do.
 - I sleep a lot
 - I eat a lot
 #+END_SRC
+
+*** Additional Headline Types (only for ~moderncv~)
+In what follows, ~ox-moderncv.el~ provides additional types of headlines that
+are described by the tags ~:cvitem:~, ~:cvlistitem:~, and ~:cvcolumn:~.
+
+Headlines of type =cvitem= are used to define a single moderncv's =cventry=. It
+requires the user to define a =ITEMS= property that contain the items that this
+=cventry= should contain. The title of the headline defines the title of the
+=cventry=.
+
+Headlines of type =cvlistitem= are used to denote that the unordered lists
+contained under it are to be moderncv's =bullet-item lists=.
+
+Finally, the headlines of type =cvcolumn= are used to define multi-column
+entries. One use case of this kind of headlines, is to describe
+references. As such, these headlines can take the following optional
+properties: =JOB=, =DEPARTMENT=, =SCHOOL=, =PHONE=, and =EMAIL=. Additionally, we
+provide a generic property =CONTENTS= that can be used to enter contents for
+the column.
+
 * Latex Exporter
   :PROPERTIES:
   :EXPORT_FILE_NAME: latex_export
@@ -554,4 +577,5 @@ kindly tip me for this project
 * Local Variables                                                   :ARCHIVE:
 # Local Variables:
 # eval: (add-hook 'after-save-hook #'org-hugo-export-wim-to-md-after-save :append :local)
+# jinx-local-words: "moderncv's"
 # End:
