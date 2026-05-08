@@ -60,7 +60,7 @@
    ((?C "As LaTeX buffer (modernCV)" org-moderncv-export-as-latex)
     (?c "As LaTex file (modernCV)" org-moderncv-export-to-latex)
     (?M "As PDF file (modernCV)" org-moderncv-export-to-pdf)
-    (?m "As PDF file (modernCV)" org-moderncv-export-to-pdf-and-open)))
+    (?m "As PDF file and open (modernCV)" org-moderncv-export-to-pdf-and-open)))
  :options-alist
  '((:latex-class "LATEX_CLASS" nil "moderncv" t)
    (:cvstyle "CVSTYLE" nil "classic" t)
