@@ -114,6 +114,8 @@ used as a communication channel"
           (org-export-data (org-element-property :DEPARTMENT headline) info))
          (school
           (org-export-data (org-element-property :SCHOOL headline) info))
+         (org
+          (org-export-data (org-element-property :ORGANIZATION headline) info))
          (phone (org-export-data (org-element-property :PHONE headline) info))
          (email (org-export-data (org-element-property :EMAIL headline) info))
          (content
@@ -123,7 +125,7 @@ used as a communication channel"
                 (string-join
                  `(,(and job
                          (format "\\textit{%s}" job))
-                   ,dept ,school ,phone ,email
+                   ,dept ,(if (string-empty-p school) org school) ,phone ,email
                    ,(org-export-data
                      (org-element-property :CONTENT headline) info))
                  "\\\\")
